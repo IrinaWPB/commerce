@@ -1,0 +1,64 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  
+<h1>My Account</h1>
+
+<table class="my-account">
+    <tr>
+        <td><h3> Items you've bought:</h3></td>
+        <td><h3> Posted Items: </h3></td>
+        <td><h3> Sold Items: </h3></td>
+    </tr>  
+    <tr>
+        <td>
+            {% if won %}
+                <ul>
+                    {% for item in won %}
+                        <li>
+                           <img src="{{item.item.picture}}" alt="image" style="width: 300px; height: auto">
+                           <p>{{item.item}}</p>
+                           <p>Price: ${{item.item.price}}</p>
+                           <p>Item sold by: {{item.seller}}</p>
+                        </li>   
+                    {% endfor %}
+                </ul>    
+            {% else %}
+                <b>You have not purchased any items yet.</b>
+            {% endif %}    
+        </td>
+        <td>
+            {% if posted %}       
+                <ul>
+                    {% for item in posted %}
+                        <li>
+                            <img src="{{item.picture}}" alt="image" style="width: 300px; height: auto">
+                            <p>{{item.title}}</p>
+                            <p>Current price: ${{item.price}}</p>
+                        </li>    
+                    {% endfor %}    
+                </ul>
+            {% else %}        
+                <b>You have not posted any items yet</b>
+            {% endif %}    
+        </td>
+        <td>
+            {% if sold %}       
+                <ul>
+                    {%for item in sold %}
+                        <li>
+                            <img src="{{item.item.picture}}" alt="image" style="width: 300px; height: auto">
+                            <p>{{item.item}}</p>
+                            <p>Final price: ${{item.item.price}}</p>
+                            <p>Sold to: {{item.winner}}
+                        </li>
+                    {% endfor %}    
+                </ul>
+            {% else %}        
+                <b>You have not sold any items yet</b>
+            {% endif %}     
+        </td>
+    </tr>
+</table>             
+          
+{% endblock %}     

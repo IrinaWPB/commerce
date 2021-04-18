@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Category: <b>{{object.category}}<b></h2>
+    
+        {% for item in listing %}
+            <div class="listing">
+            <table>
+                <tr>
+                   <td>
+                       <a href = "../auctions/{{item.id}}"> <img src="{{item.picture}}" width="200" class="title-image"></a>
+                   </td>
+                   <td>
+                       <h2>{{item.title}}<h2>
+                       <h2>Price: ${{item.price }}</h2>
+                   </td>
+                </tr>
+            </table>       
+            </div>
+        {% endfor %}    
+
+{% endblock %}     

@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  
+<h2>Listings</h2>
+    {% if message_login %}
+       <p class="login">{{ message_login }}</p>
+    {% endif %}    
+        
+    {% for obj in object_list %}
+        <div class="listing">
+            <table>
+                <tr>
+                    <td>
+                        <a href="../auctions/{{obj.id}}"> 
+                        <img src="{{ obj.picture }}" width="200" class="title-image"></a>
+                    </td>
+                    <td>        
+                        <h3>{{obj.title}}<br>
+                        Price: ${{obj.price}}</h3>
+                        <h5>Details:</h5>
+                        <ul>
+                            <li>Created by: {{obj.creator}}.</li>
+                            <li>Created on: {{obj.timestamp}}.</li>
+                        </ul>    
+                    </td>
+                </tr>
+            </table>   
+        </div>    
+    {% endfor %}
+
+{% endblock %}     

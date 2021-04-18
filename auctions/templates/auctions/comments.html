@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h1>{{ object.title }}</h1>
+
+    <img src="{{ object.picture }}" width="400">
+
+    <h2>
+          {% if object.description %} 
+             {{ object.description }}
+          {% else %} 
+             Coming Soon
+          {% endif %} 
+    </h2>
+    <h1>Leave a comment</h1>
+    
+    <form method = "POST">
+        {%csrf_token%}
+        <textarea cols="120" rows="10" name ="comment" placeholder="Leave your comment about this product"></textarea>
+        <input type = "submit" value = "Comment">
+    </form>    
+
+   
+    
+{% endblock %}     

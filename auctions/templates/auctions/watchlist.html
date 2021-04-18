@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>My Watchlist</h2>
+    {% if count == 0 %}
+    <h2>No items in your Watchlist.</h2>
+    {% endif %}
+    
+
+    {% for listing in watchlist %}
+        <div class="listing">
+            <table>
+                <tr>
+                    <td>
+                    <a href = "auctions/{{listing.product.id}}">
+                    <img src="{{ listing.product.picture }}" alt="image" style="width: 300px; height: auto"></a>
+                    </td>
+                    <td>
+                    <h2>{{ listing.product.title }}</h2>
+                    <h2>Price: ${{ listing.product.price }}</h2>
+                    </td>
+                </tr>
+            </table>
+        </div>          
+    {% endfor %}
+    
+{% endblock %}     

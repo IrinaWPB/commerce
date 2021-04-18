@@ -1,0 +1,53 @@
+body {
+    padding: 30px;
+}
+
+
+.listing {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.nav {
+    background:lightblue;
+    padding: 20px;
+}
+
+.nav-link {
+    font-size: large;
+    color:darkslateblue;  
+}  
+
+.title-image {
+    margin: 30px;
+}
+
+.winner, .sold, .valid-bid, .comment, .add, .deleted, .closed, .login {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    padding: 10px;
+}
+
+.sold, .valid-bid, .login {
+    background: lightcoral;
+}
+.winner, .comment, .add, .deleted, .closed {
+    background-color: rgb(94, 196, 191);
+}
+
+.create-form {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.my-account {
+    padding: 20px;
+    width: 100%;
+    margin: 20px;
+}
+
+
+

@@ -1,0 +1,124 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    
+        {% if message_add %}
+           <p class="add">{{ message_add }}</p>
+        {% elif message_delete %}
+           <p class="deleted">{{ message_delete }}</p>
+        {% elif message_closed %}  
+           <p class="closed">{{ message_closed }} {{closeditem.winner}}</p>
+        {% endif %} 
+ 
+
+{% if user.is_authenticated %}
+    <!-- If the item is no longer active-->
+    {% if closeditem %}
+        {% if winner == request.user %}
+           <p class="winner"> {{ message_sold_winner }} <p>
+        {% else %}  
+           <p class="sold">{{ message_sold }}</p>
+        {% endif %}
+    
+        <h1>{{ object.title }}</h1>
+        <p><img src="{{ object.picture }}" width="400"></p>
+        <h3>{{ object.description }}</h3>      
+        <h1>Price: ${{ object.price }}<h1>
+
+        <h2>Customers reviews:</h2>
+        {% if comments != None %} 
+            {% if message_comment_added %}
+               <p>{{ message_comment_added }}</p>
+            {% endif %}  
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                      {{ comment.comment }}
+                      <p><small>Posted by {{ comment.user }} on {{ comment.timestamp }}</small></p>  
+                    </li>     
+               {% endfor %}
+            </ul>
+        {% else %}
+            <h4>No posted reviews on this product.</h4>
+        {% endif %}    
+    
+        <h2>Details:</h2>
+            <ul>
+                <li>Created by {{ object.creator }}.</li>
+                <li>Created on {{ object.timestamp }}.</li>
+            </ul> 
+
+    <!-- If the listing is active-->
+    {% elif not closeditem %}
+        <h1>{{ object.title }}</h1>
+        <p><img src="{{ object.picture }}" width="400"></p>
+        <h3>{{ object.description }}</h3>      
+        <h1>Price: ${{ object.price }}<h1>
+        <h2>Customers reviews:</h2>
+
+        {% if comments != None %} 
+            {% if message_comment_added %}
+                <p class="comment">{{ message_comment_added }}</p>
+            {% endif %} 
+
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        {{ comment.comment }}
+                        <p><small>Posted by {{ comment.user }} on {{ comment.timestamp }}</small></p>  
+                    </li> 
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h4>No posted reviews on this product.</h4>
+        {% endif %}    
+    
+        <h2>Details:</h2>
+        <ul>
+            <li>Created by {{ object.creator }}.</li>
+            <li>Created on {{ object.timestamp }}.</li>
+        </ul> 
+    
+    {% if object.creator != request.user and not closeditem %}
+
+        <!-- Enter a bid -->
+        {% if message_valid_bid %}
+            <h4 class="valid-bid">{{ message_valid_bid }}</h4>
+        {% endif %}
+        <form method = "POST" class="bid-form">
+            {%csrf_token%}
+            <input type="number" name = "bid" step = "0.01" min="{{ object.price }} + .10">
+            <input type="submit" value="Place a bid">
+        </form>  <br>  
+
+        <!-- Watchlist "add/remove" -->          
+        {% if watched %}
+           <form method="POST">
+             {%csrf_token%}
+             <input type="submit" name="delete" role="button" class="btn btn-outline-success btn-lg" value="Remove from Watchlist">
+          </form>
+        {% elif watched is False %}
+        <form method="POST">
+            {%csrf_token%}
+            <input type="submit" name="add" role="button" class="btn btn-outline-success btn-lg" value="Add to Watchlist">
+        </form> 
+        {% endif %} 
+
+        <!-- Add comment -->
+        <a href="{{ object.id }}/comments" class="btn btn-outline-success btn-lg" role ="button">Leave a Comment</a>
+    {% endif %}
+
+    {% if object.creator == request.user %}
+        <!-- Close auction -->
+        {% if not closeditem %}
+        <form method="POST">
+            {%csrf_token%}
+            <input type="submit" name="close" role="button" class="btn btn-outline-success btn-lg" value="Close Auction">
+        </form> 
+        {% endif %}
+    {% endif %}  
+{% endif %}  
+{% endif %}  
+
+{% endblock %}     
